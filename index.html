@@ -1,222 +1,210 @@
 <!doctype html>
 <html lang="en" class="h-full">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Christmas Party — Cute & Playful</title>
 
-  <!-- Tailwind CDN Config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'xmas-red': '#8B0000',
-            'xmas-red-dark': '#5A0000',
-            'xmas-green': '#145214',
-            'xmas-gold': '#FFD166',
-            'xmas-cream': '#FFF8F0'
-          },
-          fontFamily: {
-            'title': ['"Dancing Script"', 'cursive'],
-            'display': ['"Playfair Display"', 'serif'],
-            'ui': ['"Montserrat"', 'system-ui', 'sans-serif']
-          },
-          keyframes: {
-            bob: { '0%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' }, '100%': { transform: 'translateY(0)' } },
-            swing: { '0%': { transform: 'rotate(-6deg)' }, '50%': { transform: 'rotate(6deg)' }, '100%': { transform: 'rotate(-6deg)' } }
-          },
-          animation: {
-            bob: 'bob 3s ease-in-out infinite',
-            swing: 'swing 4s ease-in-out infinite'
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --bg-top: #8b0000;
-      --bg-bottom: #4b0000;
+    body {
+      background: linear-gradient(180deg, #7b0000 0%, #4b0000 100%);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
     }
 
-    body {
-      background: radial-gradient(1200px 400px at 50% 15%, rgba(255,210,100,0.06), transparent 8%),
-                  linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-      font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      overflow-x: hidden;
+    .glow-title {
+      text-shadow: 0 0 20px rgba(255,215,0,0.9), 0 0 40px rgba(255,215,0,0.4);
     }
 
     .sparkle {
       position: absolute;
-      width: 6px; height: 6px;
-      border-radius: 999px;
-      background: #FFD166;
-      box-shadow: 0 0 8px rgba(255,209,102,0.9);
-      opacity: 0.9;
-      animation: sparkleAnim 2s ease-in-out infinite;
+      width: 6px;
+      height: 6px;
+      background: #FFD700;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #FFD700;
+      animation: sparkleAnim 2s infinite;
     }
+
     @keyframes sparkleAnim {
-      0% { transform: scale(.6); opacity:.3; }
-      50% { transform: scale(1.3); opacity:1; }
-      100% { transform: scale(.6); opacity:.3; }
+      0% { transform: scale(0.5); opacity: 0.3; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.5); opacity: 0.3; }
     }
 
     .frost-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,209,102,0.14);
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,215,0,0.4);
+      backdrop-filter: blur(8px);
     }
 
     .ornament {
-      width: 56px; height: 56px;
-      border-radius: 999px;
-      display:flex; align-items:center; justify-content:center;
-      background: linear-gradient(135deg, #ffecd2, #fcb69f);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-      border: 3px solid rgba(255,255,255,0.15);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ffecd2, #fcb69f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    /* Snowflakes */
+    #snowflakeContainer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: white;
+      opacity: 0.8;
+      font-size: 1rem;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 0.8; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center">
+<body>
 
-  <!-- Cute Sparkles -->
-  <div aria-hidden="true">
-    <div class="sparkle" style="top:8%; left:10%; animation-delay:.2s"></div>
-    <div class="sparkle" style="top:18%; left:85%; animation-delay:1s"></div>
-    <div class="sparkle" style="top:32%; left:42%; animation-delay:.6s"></div>
-    <div class="sparkle" style="top:70%; left:72%; animation-delay:1.5s"></div>
+<!-- SNOW -->
+<div id="snowflakeContainer"></div>
+<script>
+  const container = document.getElementById("snowflakeContainer");
+  const snowflakes = 60;
+
+  for (let i = 0; i < snowflakes; i++) {
+    let flake = document.createElement("div");
+    flake.classList.add("snowflake");
+    flake.innerHTML = "❄";
+    flake.style.left = Math.random() * 100 + "vw";
+    flake.style.animationDuration = (5 + Math.random() * 8) + "s";
+    flake.style.opacity = 0.6 + Math.random() * 0.4;
+    flake.style.fontSize = (14 + Math.random() * 24) + "px";
+    flake.style.animationDelay = Math.random() * 7 + "s";
+    container.appendChild(flake);
+  }
+</script>
+
+<!-- TOP DECOR -->
+<header class="w-full">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Christmas_garland_transparent.png/640px-Christmas_garland_transparent.png"
+       class="w-full max-h-40 object-cover" />
+</header>
+
+<section class="max-w-4xl mx-auto text-center px-6 py-10">
+
+  <h1 class="text-7xl md:text-8xl font-['Dancing Script'] text-yellow-300 glow-title mb-6">
+    Christmas Party
+  </h1>
+
+  <p class="text-xl text-white font-['Playfair Display'] italic mb-10">
+    You’re invited — bring joy, family & friends!
+  </p>
+
+  <!-- Decorative Icons -->
+  <div class="flex justify-center gap-6">
+
+    <!-- Bells -->
+    <div class="ornament animate-bounce">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Christmas_bells.png/256px-Christmas_bells.png"
+           class="w-10 h-10" />
+    </div>
+
+    <!-- Snowflake -->
+    <div class="ornament animate-pulse">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Snowflake_01.svg"
+           class="w-10 h-10" />
+    </div>
+
+    <!-- Tree -->
+    <div class="ornament animate-bounce">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Christmas_tree_icon.svg"
+           class="w-10 h-10" />
+    </div>
+
   </div>
 
-  <!-- Header -->
-  <header class="w-full max-w-5xl mt-8 px-6 flex justify-between items-center">
-    <div class="flex items-center gap-3">
-      <div class="ornament animate-bob bg-gradient-to-tr from-yellow-300 to-orange-500">
-        <img src="https://www.svgrepo.com/download/510776/christmas-tree-3.svg" class="w-8 h-8" />
-      </div>
-      <div>
-        <div class="text-sm text-xmas-gold font-semibold">Sixteen Enterprises</div>
-        <div class="text-xs text-white/70">Christmas Celebration 2025</div>
-      </div>
+  <!-- Main Info Card -->
+  <div class="frost-card rounded-3xl p-10 mt-12">
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Christmas_Bell_icon.svg/1200px-Christmas_Bell_icon.svg.png"
+         class="w-20 mx-auto mb-6" />
+
+    <p class="text-4xl font-['Playfair Display'] text-yellow-300 font-semibold">
+      Tuesday, December 16
+    </p>
+
+    <p class="mt-3 text-xl text-white">10:00 AM – 4:00 PM</p>
+
+    <div class="mt-6 text-white text-lg leading-relaxed">
+      16 Ent. Compound, Infinity Tesda,<br>
+      Masipit, Calapan City
     </div>
-  </header>
+  </div>
 
-  <!-- MAIN -->
-  <main class="w-full flex-1 flex items-center justify-center py-8 px-6">
-    <div class="max-w-4xl w-full">
+  <!-- Highlight -->
+  <div class="mt-12">
+    <div class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-red-700 border border-yellow-400 shadow-lg">
 
-      <!-- Cute Title -->
-      <div class="flex items-center justify-center gap-6 mb-6">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Christmas_bells.png/240px-Christmas_bells.png"
-             class="w-14 h-14 drop-shadow-lg animate-swing" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Gift_icon.svg"
+           class="w-8 h-8" />
 
-        <h1 class="font-title text-6xl sm:text-7xl md:text-8xl text-xmas-gold drop-shadow-lg">
-          Christmas Party
-        </h1>
-
-        <img src="https://www.svgrepo.com/download/510967/snowflake-6.svg"
-             class="w-10 h-10 animate-bob" />
-      </div>
-
-      <p class="text-center text-white/90 text-lg mb-6">
-        You’re invited — bring joy, family & friends! 🎁
-      </p>
-
-      <!-- Info Section Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-
-        <!-- LEFT CARD -->
-        <div class="frost-card rounded-2xl p-5">
-          <div class="flex items-center gap-4">
-            <div class="ornament animate-bob bg-gradient-to-tr from-red-400 to-red-700">
-              <img src="https://www.svgrepo.com/download/522714/santa-hat.svg" class="w-7 h-7" />
-            </div>
-            <div>
-              <div class="text-sm text-white/80">When</div>
-              <div class="text-xl font-bold text-xmas-gold">Tue, Dec 16</div>
-              <div class="text-sm text-white/70">10:00 AM – 4:00 PM</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- CENTER CARD -->
-        <div id="details" class="frost-card rounded-3xl p-8 text-center shadow-xl">
-          <img src="https://www.svgrepo.com/download/532552/location-pin.svg"
-               class="w-14 h-14 mx-auto" />
-
-          <div class="mt-3 text-sm text-white/80">Venue</div>
-
-          <div class="text-2xl md:text-3xl font-display text-xmas-gold font-semibold mt-1">
-            16 Ent. Compound
-          </div>
-
-          <div class="text-sm text-white/80 mt-2 leading-relaxed">
-            Infinity Tesda, Masipit, Calapan City
-          </div>
-
-          <div class="mt-6 flex gap-3 justify-center">
-            <a href="https://www.google.com/maps/search/?api=1&query=16+Ent.+Compound+Masipit+Calapan+City"
-               target="_blank"
-               class="px-4 py-2 rounded-full bg-white text-xmas-red-dark font-semibold shadow hover:scale-105 transition">
-              Open Map
-            </a>
-          </div>
-        </div>
-
-        <!-- RIGHT CARD -->
-        <div class="frost-card rounded-2xl p-5">
-          <div class="flex items-center gap-4">
-            <div class="ornament animate-bob bg-gradient-to-tr from-green-400 to-green-700">
-              <img src="https://www.svgrepo.com/download/380185/music-note.svg" class="w-7 h-7" />
-            </div>
-            <div>
-              <div class="text-sm text-white/80">Activities</div>
-              <div class="text-lg font-bold text-xmas-gold">Food · Drinks · Live Band</div>
-              <div class="text-sm text-white/70">Games & surprises</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Highlight Bar -->
-      <div class="mt-10 flex justify-center">
-        <div class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-red-600 to-red-800 border border-xmas-gold/20 shadow-lg">
-          <img src="https://www.svgrepo.com/download/408662/gift.svg" class="w-7 h-7" />
-          <div class="text-white font-semibold tracking-wider">
-            FEAST • FRIENDS • FUN
-          </div>
-        </div>
-      </div>
-
-      <!-- QR -->
-      <div class="mt-12 flex justify-center">
-        <div class="bg-white rounded-xl p-5 flex flex-col items-center shadow-xl">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://simvincent1929.github.io/sixteen-enterprises-xmas-invitation-2025/"
-               class="w-40 h-40" />
-          <div class="text-sm text-xmas-red-dark mt-3">
-            Scan for details
-          </div>
-        </div>
-      </div>
+      <span class="text-white tracking-widest font-semibold uppercase">
+        FOOD • DRINKS • LIVE MUSIC
+      </span>
 
     </div>
-  </main>
+  </div>
 
-  <!-- Footer -->
-  <footer class="w-full py-8 mt-10">
-    <div class="max-w-5xl mx-auto px-6 flex justify-between text-sm text-white/70">
-      <div>© Sixteen Enterprises • Christmas Party 2025</div>
-      <div><a href="#" class="hover:text-xmas-gold">Contact</a></div>
+  <!-- CTA Buttons -->
+  <div class="flex flex-col sm:flex-row justify-center gap-6 mt-12">
+
+    <a href="#" class="px-12 py-4 rounded-full text-xl font-bold bg-yellow-300 text-red-900 shadow-xl hover:scale-105 transition">
+      🎉 RSVP NOW
+    </a>
+
+    <a href="https://www.google.com/maps/search/?api=1&query=16+Ent.+Compound+Masipit+Calapan+City"
+       target="_blank"
+       class="px-12 py-4 rounded-full text-xl font-semibold text-white border border-white/70 bg-white/10 backdrop-blur hover:scale-105 transition">
+      📍 GET DIRECTIONS
+    </a>
+
+  </div>
+
+  <!-- QR -->
+  <div class="mt-12">
+    <div class="inline-block bg-white p-6 rounded-2xl shadow-xl">
+
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://simvincent1929.github.io/sixteen-enterprises-xmas-invitation-2025/"
+           class="w-40 h-40" />
+
+      <p class="text-red-900 mt-3">Scan for full details</p>
     </div>
-  </footer>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="mt-16">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Christmas_Presents.png/640px-Christmas_Presents.png"
+       class="w-full max-h-40 object-cover" />
+</footer>
 
 </body>
 </html>

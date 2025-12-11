@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Christmas Party — Cute & Playful</title>
 
-  <!-- Tailwind CDN + config (must be in script before tailwind uses it) -->
+  <!-- Tailwind CDN Config -->
   <script>
     tailwind.config = {
       theme: {
@@ -45,275 +45,178 @@
       --bg-bottom: #4b0000;
     }
 
-    html,body { height: 100%; margin: 0; }
     body {
       background: radial-gradient(1200px 400px at 50% 15%, rgba(255,210,100,0.06), transparent 8%),
                   linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-      font-family: 'Montserrat', system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Montserrat', sans-serif;
       color: #fff;
+      overflow-x: hidden;
     }
 
-    /* playful sparkle */
     .sparkle {
       position: absolute;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--spark-color, #FFD166);
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: #FFD166;
       box-shadow: 0 0 8px rgba(255,209,102,0.9);
       opacity: 0.9;
-      animation: sparkleAnim 2.2s ease-in-out infinite;
+      animation: sparkleAnim 2s ease-in-out infinite;
     }
     @keyframes sparkleAnim {
-      0% { transform: scale(.6); opacity: .2; }
-      50% { transform: scale(1.4); opacity: 1; }
-      100% { transform: scale(.6); opacity: .2; }
+      0% { transform: scale(.6); opacity:.3; }
+      50% { transform: scale(1.3); opacity:1; }
+      100% { transform: scale(.6); opacity:.3; }
     }
 
-    /* small card background */
     .frost-card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
       border: 1px solid rgba(255,209,102,0.14);
       backdrop-filter: blur(6px);
     }
 
-    /* playful ornament */
     .ornament {
-      width: 56px; height: 56px; border-radius: 999px;
-      display:flex;align-items:center;justify-content:center;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-      border: 3px solid rgba(255,255,255,0.12);
-    }
-
-    /* cute footer wave */
-    .wave {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      width: 56px; height: 56px;
+      border-radius: 999px;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+      border: 3px solid rgba(255,255,255,0.15);
     }
   </style>
 </head>
+
 <body class="min-h-screen flex flex-col items-center">
 
-  <!-- decorative sparkles (random positions) -->
+  <!-- Cute Sparkles -->
   <div aria-hidden="true">
-    <div class="sparkle" style="top:6%; left:8%; --spark-color:#FFEF9F; animation-delay:0s"></div>
-    <div class="sparkle" style="top:12%; left:84%; --spark-color:#FFD166; animation-delay:.6s"></div>
-    <div class="sparkle" style="top:28%; left:42%; --spark-color:#FFF5E6; animation-delay:1.2s"></div>
-    <div class="sparkle" style="top:62%; left:72%; --spark-color:#FFB3A7; animation-delay:1.8s"></div>
+    <div class="sparkle" style="top:8%; left:10%; animation-delay:.2s"></div>
+    <div class="sparkle" style="top:18%; left:85%; animation-delay:1s"></div>
+    <div class="sparkle" style="top:32%; left:42%; animation-delay:.6s"></div>
+    <div class="sparkle" style="top:70%; left:72%; animation-delay:1.5s"></div>
   </div>
 
-  <!-- header with small playful ornaments -->
-  <header class="w-full max-w-5xl mt-8 px-6 sm:px-8 flex justify-between items-center">
+  <!-- Header -->
+  <header class="w-full max-w-5xl mt-8 px-6 flex justify-between items-center">
     <div class="flex items-center gap-3">
-      <div class="ornament bg-gradient-to-br from-xmas-gold to-orange-400 animate-bob">
-        <img src="https://openclipart.org/download/325321/christmas-tree.svg" alt="tree" class="w-7 h-7" />
+      <div class="ornament animate-bob bg-gradient-to-tr from-yellow-300 to-orange-500">
+        <img src="https://www.svgrepo.com/download/510776/christmas-tree-3.svg" class="w-8 h-8" />
       </div>
-      <div class="text-left">
+      <div>
         <div class="text-sm text-xmas-gold font-semibold">Sixteen Enterprises</div>
         <div class="text-xs text-white/70">Christmas Celebration 2025</div>
       </div>
     </div>
-
-    <nav class="hidden sm:flex gap-4 items-center">
-      <a href="#details" class="px-3 py-1 text-sm rounded-full bg-white/10 hover:bg-white/20 transition">Details</a>
-      <a href="#rsvp" class="px-3 py-1 text-sm rounded-full bg-xmas-gold text-xmas-red-dark font-semibold shadow">RSVP</a>
-    </nav>
   </header>
 
-  <!-- hero -->
+  <!-- MAIN -->
   <main class="w-full flex-1 flex items-center justify-center py-8 px-6">
     <div class="max-w-4xl w-full">
 
-      <!-- playful top row -->
+      <!-- Cute Title -->
       <div class="flex items-center justify-center gap-6 mb-6">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Christmas_Bell_icon.svg/1200px-Christmas_Bell_icon.svg.png" alt="bells" class="w-14 h-14 drop-shadow-lg animate-swing" />
-        <h1 class="title-font font-title text-6xl sm:text-7xl md:text-8xl text-xmas-gold drop-shadow-lg">Christmas Party</h1>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Snowflake_icon.svg/1200px-Snowflake_icon.svg.png" alt="snow" class="w-10 h-10 animate-bob" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Christmas_bells.png/240px-Christmas_bells.png"
+             class="w-14 h-14 drop-shadow-lg animate-swing" />
+
+        <h1 class="font-title text-6xl sm:text-7xl md:text-8xl text-xmas-gold drop-shadow-lg">
+          Christmas Party
+        </h1>
+
+        <img src="https://www.svgrepo.com/download/510967/snowflake-6.svg"
+             class="w-10 h-10 animate-bob" />
       </div>
 
-      <p class="text-center text-white/90 text-lg md:text-xl mb-6">You’re invited — bring your cheer, family & friends! 🎁</p>
+      <p class="text-center text-white/90 text-lg mb-6">
+        You’re invited — bring joy, family & friends! 🎁
+      </p>
 
-      <!-- info + ornament gallery -->
+      <!-- Info Section Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
 
-        <!-- left playful card -->
-        <div class="frost-card rounded-2xl p-5 md:p-6">
+        <!-- LEFT CARD -->
+        <div class="frost-card rounded-2xl p-5">
           <div class="flex items-center gap-4">
-            <div class="ornament bg-gradient-to-tr from-red-400 to-red-700 animate-bob">
-              <img src="https://openclipart.org/download/350117/santa-hat.svg" alt="hat" class="w-6 h-6"/>
+            <div class="ornament animate-bob bg-gradient-to-tr from-red-400 to-red-700">
+              <img src="https://www.svgrepo.com/download/522714/santa-hat.svg" class="w-7 h-7" />
             </div>
             <div>
               <div class="text-sm text-white/80">When</div>
-              <div class="text-lg font-bold text-xmas-gold">Tue, Dec 16</div>
+              <div class="text-xl font-bold text-xmas-gold">Tue, Dec 16</div>
               <div class="text-sm text-white/70">10:00 AM – 4:00 PM</div>
             </div>
           </div>
         </div>
 
-        <!-- center big card -->
-        <div id="details" class="frost-card rounded-3xl p-6 md:p-8 text-center shadow-xl">
-          <div class="mb-3">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Location_dot_icon.svg/1024px-Location_dot_icon.svg.png" alt="pin" class="w-12 h-12 mx-auto" />
+        <!-- CENTER CARD -->
+        <div id="details" class="frost-card rounded-3xl p-8 text-center shadow-xl">
+          <img src="https://www.svgrepo.com/download/532552/location-pin.svg"
+               class="w-14 h-14 mx-auto" />
+
+          <div class="mt-3 text-sm text-white/80">Venue</div>
+
+          <div class="text-2xl md:text-3xl font-display text-xmas-gold font-semibold mt-1">
+            16 Ent. Compound
           </div>
-          <div class="text-sm text-white/80 mb-1">Venue</div>
-          <div class="text-2xl md:text-3xl font-display text-xmas-gold font-semibold">16 Ent. Compound</div>
-          <div class="text-sm md:text-base text-white/80 mt-2 leading-relaxed">
+
+          <div class="text-sm text-white/80 mt-2 leading-relaxed">
             Infinity Tesda, Masipit, Calapan City
           </div>
 
           <div class="mt-6 flex gap-3 justify-center">
-            <a href="https://www.google.com/maps/search/?api=1&query=16+Ent.+Compound+Masipit+Calapan+City" target="_blank" class="px-4 py-2 rounded-full bg-white text-xmas-red-dark font-semibold shadow hover:scale-105 transition">Open Map</a>
-            <button id="openRsvp" class="px-4 py-2 rounded-full bg-xmas-gold text-xmas-red-dark font-semibold shadow hover:scale-105 transition">RSVP</button>
+            <a href="https://www.google.com/maps/search/?api=1&query=16+Ent.+Compound+Masipit+Calapan+City"
+               target="_blank"
+               class="px-4 py-2 rounded-full bg-white text-xmas-red-dark font-semibold shadow hover:scale-105 transition">
+              Open Map
+            </a>
           </div>
         </div>
 
-        <!-- right playful card -->
-        <div class="frost-card rounded-2xl p-5 md:p-6">
+        <!-- RIGHT CARD -->
+        <div class="frost-card rounded-2xl p-5">
           <div class="flex items-center gap-4">
-            <div class="ornament bg-gradient-to-tr from-green-400 to-green-700 animate-bob">
-              <img src="https://openclipart.org/download/283581/music-note.svg" alt="music" class="w-6 h-6"/>
+            <div class="ornament animate-bob bg-gradient-to-tr from-green-400 to-green-700">
+              <img src="https://www.svgrepo.com/download/380185/music-note.svg" class="w-7 h-7" />
             </div>
             <div>
               <div class="text-sm text-white/80">Activities</div>
               <div class="text-lg font-bold text-xmas-gold">Food · Drinks · Live Band</div>
-              <div class="text-sm text-white/70">Games, raffle & prizes</div>
+              <div class="text-sm text-white/70">Games & surprises</div>
             </div>
           </div>
         </div>
 
       </div>
 
-      <!-- highlight bar -->
-      <div class="mt-8 flex justify-center">
-        <div class="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-800 border border-xmas-gold/20 shadow-lg">
-          <img src="https://openclipart.org/image/64px/svg_to_png/283583/gift.png" alt="gift" class="w-6 h-6" />
-          <div class="text-white font-semibold tracking-wider">FEAST • FRIENDS • FUN</div>
+      <!-- Highlight Bar -->
+      <div class="mt-10 flex justify-center">
+        <div class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-red-600 to-red-800 border border-xmas-gold/20 shadow-lg">
+          <img src="https://www.svgrepo.com/download/408662/gift.svg" class="w-7 h-7" />
+          <div class="text-white font-semibold tracking-wider">
+            FEAST • FRIENDS • FUN
+          </div>
         </div>
       </div>
 
-      <!-- QR + CTA row -->
-      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
-        <div class="bg-white rounded-xl p-4 flex flex-col items-center shadow-lg">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://simvincent1929.github.io/sixteen-enterprises-xmas-invitation-2025/" alt="QR" class="w-40 h-40"/>
-          <div class="text-sm text-xmas-red-dark mt-2">Scan for details</div>
-        </div>
-
-        <div class="flex flex-col gap-3">
-          <a href="#rsvp" class="px-6 py-3 bg-xmas-gold text-xmas-red-dark rounded-full font-bold shadow hover:scale-105 transition text-center">Quick RSVP</a>
-          <a href="mailto:info@sixteen-enterprises.com?subject=RSVP%20Christmas%20Party" class="px-6 py-3 bg-white/10 rounded-full text-white hover:bg-white/20 transition text-center">Email RSVP</a>
+      <!-- QR -->
+      <div class="mt-12 flex justify-center">
+        <div class="bg-white rounded-xl p-5 flex flex-col items-center shadow-xl">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://simvincent1929.github.io/sixteen-enterprises-xmas-invitation-2025/"
+               class="w-40 h-40" />
+          <div class="text-sm text-xmas-red-dark mt-3">
+            Scan for details
+          </div>
         </div>
       </div>
 
     </div>
   </main>
 
-  <!-- footer playful -->
-  <footer class="w-full py-8 wave mt-8">
-    <div class="max-w-5xl mx-auto px-6 sm:px-8 flex items-center justify-between">
-      <div class="text-sm text-white/70">© Sixteen Enterprises • Christmas Party 2025</div>
-      <div class="text-sm">
-        <a href="#" class="text-white/80 hover:text-xmas-gold transition">Contact</a>
-      </div>
+  <!-- Footer -->
+  <footer class="w-full py-8 mt-10">
+    <div class="max-w-5xl mx-auto px-6 flex justify-between text-sm text-white/70">
+      <div>© Sixteen Enterprises • Christmas Party 2025</div>
+      <div><a href="#" class="hover:text-xmas-gold">Contact</a></div>
     </div>
   </footer>
 
-  <!-- RSVP modal (client-side only) -->
-  <div id="rsvpModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 p-4">
-    <div class="bg-white/95 text-xmas-red-dark rounded-2xl w-full max-w-lg p-6 shadow-2xl">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-2xl font-semibold">RSVP — You're coming!</h3>
-        <button id="closeRsvp" class="text-xl">✕</button>
-      </div>
-
-      <form id="rsvpForm" class="space-y-3">
-        <div>
-          <label class="text-sm block mb-1">Full name</label>
-          <input name="name" required class="w-full p-3 rounded-md border border-gray-200" placeholder="Juan dela Cruz" />
-        </div>
-        <div>
-          <label class="text-sm block mb-1">Email</label>
-          <input name="email" type="email" required class="w-full p-3 rounded-md border border-gray-200" placeholder="you@example.com" />
-        </div>
-        <div>
-          <label class="text-sm block mb-1">Guests</label>
-          <select name="guests" class="w-full p-3 rounded-md border border-gray-200">
-            <option>0 — Just me</option>
-            <option>1 guest</option>
-            <option>2 guests</option>
-            <option>Family (3+)</option>
-          </select>
-        </div>
-
-        <div class="flex gap-3">
-          <button type="submit" class="flex-1 px-4 py-3 rounded-full bg-xmas-gold font-semibold">Send RSVP</button>
-          <button type="button" id="cancelRsvp" class="flex-1 px-4 py-3 rounded-full bg-white/10 text-white">Cancel</button>
-        </div>
-
-        <p id="rsvpMsg" class="text-sm text-green-700 hidden">Thanks! Your RSVP was recorded (demo only).</p>
-      </form>
-
-    </div>
-  </div>
-
-  <!-- layered snow (3 depth layers) -->
-  <canvas id="snowCanvas" class="pointer-events-none fixed inset-0 z-40"></canvas>
-
-  <script>
-    // Simple RSVP modal logic (client-side demo)
-    const openRsvp = document.getElementById('openRsvp');
-    const rsvpModal = document.getElementById('rsvpModal');
-    const closeRsvp = document.getElementById('closeRsvp');
-    const cancelRsvp = document.getElementById('cancelRsvp');
-    const rsvpForm = document.getElementById('rsvpForm');
-    const rsvpMsg = document.getElementById('rsvpMsg');
-
-    function showModal() { rsvpModal.classList.remove('hidden'); rsvpModal.classList.add('flex'); }
-    function hideModal() { rsvpModal.classList.add('hidden'); rsvpModal.classList.remove('flex'); rsvpMsg.classList.add('hidden'); }
-
-    openRsvp?.addEventListener('click', showModal);
-    closeRsvp?.addEventListener('click', hideModal);
-    cancelRsvp?.addEventListener('click', hideModal);
-
-    rsvpForm?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // Demo: show message then close
-      rsvpMsg.classList.remove('hidden');
-      rsvpMsg.textContent = 'Thanks! This is a demo RSVP — integrate with server to collect responses.';
-      setTimeout(hideModal, 1500);
-    });
-
-    // Snow canvas — layered small particle system (lightweight)
-    (function () {
-      const canvas = document.getElementById('snowCanvas');
-      const ctx = canvas.getContext('2d');
-      let w = canvas.width = innerWidth;
-      let h = canvas.height = innerHeight;
-      window.addEventListener('resize', () => { w = canvas.width = innerWidth; h = canvas.height = innerHeight; });
-
-      function rand(min, max) { return Math.random() * (max - min) + min; }
-
-      // create particles for 3 layers
-      const layers = [
-        Array.from({length: 30}, () => ({x: rand(0,w), y: rand(-h, h), r: rand(0.6,1.8), s: rand(0.3,0.9)})),
-        Array.from({length: 40}, () => ({x: rand(0,w), y: rand(-h, h), r: rand(1,3), s: rand(0.6,1.2)})),
-        Array.from({length: 20}, () => ({x: rand(0,w), y: rand(-h, h), r: rand(2,5), s: rand(1,1.8)}))
-      ];
-
-      function draw() {
-        ctx.clearRect(0,0,w,h);
-        layers.forEach((layer, i) => {
-          ctx.fillStyle = `rgba(255,255,255,${0.25 + i*0.15})`;
-          layer.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-            ctx.fill();
-            p.y += 0.3 + p.s * (i*0.6 + 0.6);
-            p.x += Math.sin((p.y + i*10) * 0.01) * 0.6;
-            if (p.y > h + 10) { p.y = -10; p.x = rand(0,w); }
-          });
-        });
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
-  </script>
 </body>
 </html>

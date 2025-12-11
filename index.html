@@ -1,210 +1,289 @@
 <!doctype html>
 <html lang="en" class="h-full">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Christmas Party — Cute & Playful</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Christmas Party — Cute & Playful (Self-contained)</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind CDN + minimal config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'xmas-red': '#8B0000',
+            'xmas-red-dark': '#5A0000',
+            'xmas-green': '#1f6f3b',
+            'xmas-gold': '#FFD166',
+            'xmas-cream': '#FFF8F0'
+          },
+          fontFamily: {
+            title: ['"Dancing Script"', 'cursive'],
+            display: ['"Playfair Display"', 'serif'],
+            ui: ['"Montserrat"', 'system-ui', 'sans-serif']
+          },
+          keyframes: {
+            bob: { '0%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' }, '100%': { transform: 'translateY(0)' } },
+            swing: { '0%': { transform: 'rotate(-6deg)' }, '50%': { transform: 'rotate(6deg)' }, '100%': { transform: 'rotate(-6deg)' } }
+          },
+          animation: {
+            bob: 'bob 3s ease-in-out infinite',
+            swing: 'swing 4s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- Webfonts (still external; tiny) -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      background: linear-gradient(180deg, #7b0000 0%, #4b0000 100%);
-      font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden;
+    :root{
+      --bg-top:#8b0000; --bg-bottom:#4b0000;
+    }
+    html,body{height:100%;margin:0}
+    body{
+      background:
+        radial-gradient(900px 280px at 50% 12%, rgba(255,210,100,0.05), transparent 8%),
+        linear-gradient(180deg,var(--bg-top) 0%,var(--bg-bottom) 100%);
+      font-family: "Montserrat", system-ui, sans-serif;
+      color:#fff; -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
 
-    .glow-title {
-      text-shadow: 0 0 20px rgba(255,215,0,0.9), 0 0 40px rgba(255,215,0,0.4);
+    /* Decorations */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,209,102,0.12);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+    }
+    .orn {
+      width:56px;height:56px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 6px 18px rgba(0,0,0,0.4);
+      border:3px solid rgba(255,255,255,0.08);
     }
 
-    .sparkle {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      background: #FFD700;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #FFD700;
-      animation: sparkleAnim 2s infinite;
-    }
+    /* snow simple */
+    #snowCanvas { position: fixed; inset:0; pointer-events:none; z-index:45; }
 
-    @keyframes sparkleAnim {
-      0% { transform: scale(0.5); opacity: 0.3; }
-      50% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(0.5); opacity: 0.3; }
-    }
-
-    .frost-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,215,0,0.4);
-      backdrop-filter: blur(8px);
-    }
-
-    .ornament {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #ffecd2, #fcb69f);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    /* Snowflakes */
-    #snowflakeContainer {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 50;
-    }
-
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      color: white;
-      opacity: 0.8;
-      font-size: 1rem;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0); opacity: 0.8; }
-      100% { transform: translateY(100vh); opacity: 0; }
-    }
+    /* tiny sparkle dots */
+    .sparkle{position:absolute;width:6px;height:6px;border-radius:999px;background:#FFD166;box-shadow:0 0 10px #FFD166;opacity:.95;animation:sp 2.4s linear infinite}
+    @keyframes sp{0%{transform:scale(.6);opacity:.2}50%{transform:scale(1.4);opacity:1}100%{transform:scale(.6);opacity:.2}}
   </style>
 </head>
+<body class="min-h-screen">
 
-<body>
-
-<!-- SNOW -->
-<div id="snowflakeContainer"></div>
-<script>
-  const container = document.getElementById("snowflakeContainer");
-  const snowflakes = 60;
-
-  for (let i = 0; i < snowflakes; i++) {
-    let flake = document.createElement("div");
-    flake.classList.add("snowflake");
-    flake.innerHTML = "❄";
-    flake.style.left = Math.random() * 100 + "vw";
-    flake.style.animationDuration = (5 + Math.random() * 8) + "s";
-    flake.style.opacity = 0.6 + Math.random() * 0.4;
-    flake.style.fontSize = (14 + Math.random() * 24) + "px";
-    flake.style.animationDelay = Math.random() * 7 + "s";
-    container.appendChild(flake);
-  }
-</script>
-
-<!-- TOP DECOR -->
-<header class="w-full">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Christmas_garland_transparent.png/640px-Christmas_garland_transparent.png"
-       class="w-full max-h-40 object-cover" />
-</header>
-
-<section class="max-w-4xl mx-auto text-center px-6 py-10">
-
-  <h1 class="text-7xl md:text-8xl font-['Dancing Script'] text-yellow-300 glow-title mb-6">
-    Christmas Party
-  </h1>
-
-  <p class="text-xl text-white font-['Playfair Display'] italic mb-10">
-    You’re invited — bring joy, family & friends!
-  </p>
-
-  <!-- Decorative Icons -->
-  <div class="flex justify-center gap-6">
-
-    <!-- Bells -->
-    <div class="ornament animate-bounce">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Christmas_bells.png/256px-Christmas_bells.png"
-           class="w-10 h-10" />
-    </div>
-
-    <!-- Snowflake -->
-    <div class="ornament animate-pulse">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Snowflake_01.svg"
-           class="w-10 h-10" />
-    </div>
-
-    <!-- Tree -->
-    <div class="ornament animate-bounce">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Christmas_tree_icon.svg"
-           class="w-10 h-10" />
-    </div>
-
+  <!-- subtle sparkles -->
+  <div aria-hidden="true">
+    <div class="sparkle" style="top:6%;left:8%;animation-delay:.2s"></div>
+    <div class="sparkle" style="top:14%;left:78%;animation-delay:.7s"></div>
+    <div class="sparkle" style="top:34%;left:40%;animation-delay:1.1s"></div>
   </div>
 
-  <!-- Main Info Card -->
-  <div class="frost-card rounded-3xl p-10 mt-12">
+  <!-- Inline SVG Garland Header -->
+  <header class="w-full">
+    <svg viewBox="0 0 1200 140" preserveAspectRatio="none" class="w-full block" aria-hidden>
+      <!-- simple stylized garland -->
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#1f6f3b"/><stop offset="1" stop-color="#15502b"/></linearGradient>
+      </defs>
+      <rect width="1200" height="140" fill="transparent"/>
+      <g transform="translate(0,10)">
+        <path d="M0,100 C200,10 400,160 600,80 C800,0 1000,140 1200,70" fill="none" stroke="url(#g1)" stroke-width="28" stroke-linecap="round"/>
+        <!-- ornaments -->
+        <circle cx="90" cy="80" r="10" fill="#FFD166"/>
+        <circle cx="230" cy="60" r="12" fill="#ff6b6b"/>
+        <circle cx="380" cy="78" r="9" fill="#ffe0b5"/>
+        <circle cx="540" cy="52" r="12" fill="#FFD166"/>
+        <circle cx="700" cy="76" r="10" fill="#ff6b6b"/>
+        <circle cx="860" cy="64" r="9" fill="#ffe0b5"/>
+        <circle cx="1040" cy="82" r="12" fill="#FFD166"/>
+      </g>
+    </svg>
+  </header>
 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Christmas_Bell_icon.svg/1200px-Christmas_Bell_icon.svg.png"
-         class="w-20 mx-auto mb-6" />
+  <!-- Main content -->
+  <main class="max-w-4xl mx-auto px-6 py-8">
 
-    <p class="text-4xl font-['Playfair Display'] text-yellow-300 font-semibold">
-      Tuesday, December 16
-    </p>
-
-    <p class="mt-3 text-xl text-white">10:00 AM – 4:00 PM</p>
-
-    <div class="mt-6 text-white text-lg leading-relaxed">
-      16 Ent. Compound, Infinity Tesda,<br>
-      Masipit, Calapan City
+    <div class="text-center mb-6">
+      <h1 class="font-title text-5xl sm:text-6xl md:text-7xl text-xmas-gold drop-shadow-md" style="font-family:'Dancing Script',cursive">
+        Christmas Party
+      </h1>
+      <p class="text-white/90 mt-2 text-sm md:text-base" style="font-family:'Playfair Display',serif;">
+        You’re invited — bring joy, family & friends!
+      </p>
     </div>
-  </div>
 
-  <!-- Highlight -->
-  <div class="mt-12">
-    <div class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-red-700 border border-yellow-400 shadow-lg">
+    <!-- small icons row (inline svg icons) -->
+    <div class="flex justify-center gap-6 mb-8">
+      <!-- Bells SVG -->
+      <div class="orn animate-[bob_3s_ease-in-out_infinite]">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M12 2c1.657 0 3 1.343 3 3v1.07c2.16.619 3.75 2.66 3.75 4.93v2.5l1 1v1h-18v-1l1-1v-2.5c0-2.27 1.59-4.31 3.75-4.93v-1.07c0-1.657 1.343-3 3-3z" fill="#FFD166"/>
+          <path d="M9 20a3 3 0 0 0 6 0" fill="#ffb86b"/>
+        </svg>
+      </div>
 
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/Gift_icon.svg"
-           class="w-8 h-8" />
+      <!-- Snowflake SVG -->
+      <div class="orn animate-pulse">
+        <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden>
+          <g fill="#fff">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="1.5" fill="#FFD166"/>
+          </g>
+        </svg>
+      </div>
 
-      <span class="text-white tracking-widest font-semibold uppercase">
-        FOOD • DRINKS • LIVE MUSIC
-      </span>
-
+      <!-- Tree SVG -->
+      <div class="orn animate-[bob_3s_ease-in-out_infinite]">
+        <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden>
+          <path d="M12 3l4 7h-3l1 4-2-1-2 1 1-4H8l4-7z" fill="#1f6f3b"/>
+          <rect x="10" y="18" width="4" height="3" rx="0.5" fill="#8b5a2b"/>
+        </svg>
+      </div>
     </div>
-  </div>
 
-  <!-- CTA Buttons -->
-  <div class="flex flex-col sm:flex-row justify-center gap-6 mt-12">
+    <!-- INFO CARD -->
+    <section class="card p-6 md:p-10 rounded-2xl">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        <!-- When -->
+        <div class="md:col-span-1 flex items-start gap-4">
+          <div class="orn bg-gradient-to-tr from-red-400 to-red-700 animate-bob">
+            <!-- small santa hat svg -->
+            <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden>
+              <path d="M2 20c2-2 6 1 10 1s8-3 10-1c-2-4-7-6-10-6S4 16 2 20z" fill="#fff"/>
+              <path d="M5 11c4-4 10-4 14 0l-3 1c-3-3-8-3-11 0l-3-1z" fill="#d33"/>
+            </svg>
+          </div>
+          <div>
+            <div class="text-sm text-white/80">When</div>
+            <div class="text-lg font-semibold text-xmas-gold">Tue, Dec 16</div>
+            <div class="text-sm text-white/80">10:00 AM – 4:00 PM</div>
+          </div>
+        </div>
 
-    <a href="#" class="px-12 py-4 rounded-full text-xl font-bold bg-yellow-300 text-red-900 shadow-xl hover:scale-105 transition">
-      🎉 RSVP NOW
-    </a>
+        <!-- Venue center -->
+        <div class="md:col-span-1 text-center">
+          <div style="width:72px;height:72px;margin:0 auto" class="mb-3">
+            <!-- location pin -->
+            <svg width="72" height="72" viewBox="0 0 24 24" aria-hidden>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#ffd166"/>
+              <circle cx="12" cy="9" r="2.2" fill="#8b0000"/>
+            </svg>
+          </div>
+          <div class="text-sm text-white/80">Venue</div>
+          <div class="text-xl md:text-2xl font-semibold text-xmas-gold mt-1">16 Ent. Compound</div>
+          <div class="text-sm text-white/80 mt-2">Infinity Tesda, Masipit, Calapan City</div>
+        </div>
 
-    <a href="https://www.google.com/maps/search/?api=1&query=16+Ent.+Compound+Masipit+Calapan+City"
-       target="_blank"
-       class="px-12 py-4 rounded-full text-xl font-semibold text-white border border-white/70 bg-white/10 backdrop-blur hover:scale-105 transition">
-      📍 GET DIRECTIONS
-    </a>
+        <!-- Activities -->
+        <div class="md:col-span-1 flex items-start gap-4">
+          <div class="orn bg-gradient-to-tr from-green-400 to-green-700 animate-bob">
+            <!-- music note -->
+            <svg width="28" height="28" viewBox="0 0 24 24"><path d="M9 17V5l11-2v12" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="6" cy="17" r="2" fill="#ffd166"/></svg>
+          </div>
+          <div>
+            <div class="text-sm text-white/80">Activities</div>
+            <div class="text-lg font-semibold text-xmas-gold">Food · Drinks · Live Band</div>
+            <div class="text-sm text-white/80">Games, raffle & prizes</div>
+          </div>
+        </div>
+      </div>
 
-  </div>
+      <!-- CTA row under card -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#rsvp" class="px-6 py-3 rounded-full bg-xmas-gold text-xmas-red-dark font-semibold">RSVP Now</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=16+Ent.+Compound+Masipit+Calapan+City" target="_blank" class="px-6 py-3 rounded-full bg-white/10 border border-white/20">Get Directions</a>
+      </div>
+    </section>
 
-  <!-- QR -->
-  <div class="mt-12">
-    <div class="inline-block bg-white p-6 rounded-2xl shadow-xl">
-
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://simvincent1929.github.io/sixteen-enterprises-xmas-invitation-2025/"
-           class="w-40 h-40" />
-
-      <p class="text-red-900 mt-3">Scan for full details</p>
+    <!-- highlight pill -->
+    <div class="mt-8 text-center">
+      <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-800 border border-yellow-400/20">
+        <!-- gift svg -->
+        <svg width="22" height="22" viewBox="0 0 24 24" class="inline-block" aria-hidden>
+          <path d="M3 11v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8H3z" fill="#fff3e0"/>
+          <path d="M21 11v-2a2 2 0 0 0-2-2h-3.5a2.5 2.5 0 1 0-2.5-2.5A2.5 2.5 0 0 0 10.5 7H7a2 2 0 0 0-2 2v2" fill="#ffd166"/>
+        </svg>
+        <span class="text-white font-semibold tracking-wider">FEAST • FRIENDS • FUN</span>
+      </div>
     </div>
-  </div>
 
-</section>
+    <!-- QR block (uses public QR API; typically allowed) -->
+    <div class="mt-10 flex justify-center">
+      <div class="bg-white p-4 rounded-xl text-center" style="color:#8b0000">
+        <div style="width:160px;height:160px;margin:0 auto">
+          <!-- inline placeholder SVG QR-style (simple) — clickable to real QR generator if you prefer -->
+          <svg viewBox="0 0 100 100" width="160" height="160" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <rect x="0" y="0" width="100" height="100" fill="#fff"/>
+            <!-- simple block pattern to mimic QR (not scannable) -->
+            <rect x="5" y="5" width="20" height="20" fill="#000"/>
+            <rect x="5" y="35" width="20" height="20" fill="#000"/>
+            <rect x="35" y="5" width="20" height="20" fill="#000"/>
+            <rect x="60" y="60" width="10" height="10" fill="#000"/>
+            <rect x="75" y="75" width="8" height="8" fill="#000"/>
+            <rect x="40" y="40" width="8" height="8" fill="#000"/>
+            <rect x="55" y="10" width="5" height="5" fill="#000"/>
+          </svg>
+        </div>
+        <div class="mt-3 text-sm">Scan for full details (replace with live QR if needed)</div>
+      </div>
+    </div>
 
-<!-- FOOTER -->
-<footer class="mt-16">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Christmas_Presents.png/640px-Christmas_Presents.png"
-       class="w-full max-h-40 object-cover" />
-</footer>
+  </main>
+
+  <!-- Footer presents SVG -->
+  <footer class="mt-10">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full block" aria-hidden>
+      <defs>
+        <linearGradient id="pg" x1="0" x2="1">
+          <stop offset="0" stop-color="#fff3e0" stop-opacity="0.06"/>
+          <stop offset="1" stop-color="#ffd166" stop-opacity="0.08"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="120" fill="transparent"/>
+      <g transform="translate(0,8)">
+        <path d="M0,90 C120,20 240,120 360,70 C480,20 600,110 720,70 C840,30 960,100 1080,60 C1200,20 1200,20 1200,20" fill="url(#pg)"/>
+        <!-- small gift icons -->
+        <rect x="120" y="48" width="28" height="22" rx="3" fill="#FFD166"/>
+        <rect x="180" y="36" width="30" height="22" rx="3" fill="#ff6b6b"/>
+        <rect x="260" y="44" width="26" height="20" rx="3" fill="#b5ffd1"/>
+      </g>
+    </svg>
+  </footer>
+
+  <!-- Snow canvas (lightweight) -->
+  <canvas id="snowCanvas"></canvas>
+  <script>
+    // Lightweight snow particle system
+    (function(){
+      const canvas = document.getElementById('snowCanvas');
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+      window.addEventListener('resize', () => { w = canvas.width = innerWidth; h = canvas.height = innerHeight; });
+      function rand(a,b){return Math.random()*(b-a)+a;}
+      const count = Math.floor((w*h)/80000) + 40;
+      const flakes = Array.from({length:count}, () => ({x:rand(0,w), y:rand(-h, h), r:rand(0.8,3.5), s:rand(0.3,1.2)}));
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        flakes.forEach((f,i)=> {
+          ctx.beginPath();
+          ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+          ctx.fill();
+          f.y += 0.3 + f.s * (1 + i%3);
+          f.x += Math.sin((f.y + i)*0.01) * 0.6;
+          if(f.y > h + 10){ f.y = -10; f.x = rand(0,w); }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
 
 </body>
 </html>
